@@ -84,22 +84,25 @@
             finalList.innerHTML = "<li>No selections found</li>";
         }
 
+        // Use EmailJS instead of your server to send the email
         document.getElementById("done-btn").addEventListener("click", () => {
-            fetch('http://localhost:3000/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ selections })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
-                window.location.href = "thanks.html"; // Redirect after email is sent
-            })
-            .catch(error => console.error("Error:", error));
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", { selections: selections.join(", ") })
+                .then(function(response) {
+                    console.log("Email sent successfully!", response);
+                    window.location.href = "thanks.html"; // Redirect after email is sent
+                }, function(error) {
+                    console.error("Failed to send email:", error);
+                });
         });
     });
+</script>
+
+<!-- Include the EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function() {
+        emailjs.init("service_3kzt4of");  // Replace with your actual user ID from EmailJS
+    })();
 </script>
 
 </body>
