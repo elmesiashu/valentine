@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">   
+    <title>Valentine's Selection</title>
+    <style>
+        body {
+            background-color: #fceaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-image: url('./images/hearts.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 70%;
+        }
+        .window {
+            background: #ffb6c1;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ffb6c1;
+        }
+        .ranking {
+            background: white;
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid #Ffc1cc;
+        }
+        .ranking h2 {
+            color: #ff3366;
+        }
+        .ranking-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 18px;
+        }
+        .ranking-list li {
+            background: #ffb6c1;
+            color: black;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-shadow: 1px 1px white;
+        }
+        .header {
+            background: #f4c2c2;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            padding: 5px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            border: 2px solid #Ffc1cc;
+        }
+        .im {
+            background: #f2dadf;
+            width: 356px;
+            border-radius: 0 0 8px 8px;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #Ffc1cc;
+        }
+        p {
+            font-size: 20px;
+            color: #333;
+            text-shadow: 1px 1px #ff99cc;
+            font-family: "Lucida Handwriting";
+            text-transform: uppercase;
+        }
+        .btn {
+            background: #ff6699;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;;
+            box-shadow: 3px 3px #ff3366;
+        }
+        .btn:hover {
+            background: #ff3366;
+            box-shadow: 5px 5px #cc0033;
+        }
+        .choice-btn {
+            background: #ff6699;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .choice-btn:hover {
+            background: #ff3366;
+        }
+        .hidden {
+            display: none;
+        }
+
+        .movie-container{
+            background: white;
+            padding: 20px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            border: 2px solid #Ffc1cc;
+        }
+
+        .remove-btn {
+            background: transparent;
+            border: none;
+            color: #ff3366;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: color 0.3s;
+        }
+        .remove-btn:hover {
+            color: #cc0033;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Ranking Section -->
+    <div class="ranking">
+        <h2>Ranking</h2>
+        <ul class="ranking-list"></ul>
+        <button class="btn" onclick="nextStep()">Done Selection</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="window">
+        <div class="header">
+            <p>Choice the stuff you wanna do during Valentines</p>
+        </div>
+        <div class="im">
+            <img src=".\images\plans.gif" alt="Happy" width="300" height="250">
+        </div>
+        <br>
+
+        <!-- Choices -->
+        <button class="choice-btn" onclick="selectActivity('Movie')">🎬 Movie </button>
+        <button class="choice-btn" onclick="selectActivity('MLBB')"> 🎮 MLBB </button>
+        <button class="choice-btn" onclick="selectActivity('Online Games')"> 🕹 Online Games </button>
+        <button class="choice-btn" onclick="selectActivity('Series/Anime/Cartoon Marathon')"> 📺 Series/Anime/Cartoon Marathon </button>
+        <button class="choice-btn" onclick="selectActivity('Coloring/Drawing Online')"> 🎨 Coloring/Drawing Online </button>
+        <button class="choice-btn" onclick="selectActivity('Make a Playlist')"> 🎵 Make a Playlist </button>
+        <button class="choice-btn" onclick="selectActivity('Personality Test')"> 📝 Personality Test </button>
+    </div>
+
+    <!-- Movie Options -->        
+     <div id="movie-options" class="hidden">
+        <div class="movie-container">
+            <h2>Select a Movie</h2>
+            <button class="choice-btn" onclick="selectMovie('Fifty Shades of Grey')">📽 Fifty Shades of Grey</button>
+            <button class="choice-btn" onclick="selectMovie('An Inconvenient Love')">❤️ An Inconvenient Love</button>
+            <button class="choice-btn" onclick="selectMovie('Love Can\'t Be Said')">💞 Love Can't Be Said</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let rankingList = document.querySelector(".ranking-list");
+    let movieOptions = document.getElementById("movie-options");
+    let selectedChoices = {};
+
+    function selectActivity(activity) {
+        if (activity === "Movie") {
+            movieOptions.classList.remove("hidden");
+        } else {
+            addToRanking(activity, activity);
+        }
+        hideChoice(activity);
+    }
+
+    function selectMovie(movie) {
+        addToRanking(movie, movie);
+        movieOptions.classList.add("hidden");
+    }
+
+    function addToRanking(key, text) {
+        if (selectedChoices[key]) return;
+
+        selectedChoices[key] = true;
+        let listItem = document.createElement("li");
+
+        let removeButton = document.createElement("button");
+        removeButton.innerText = "❌";
+        removeButton.classList.add("remove-btn");
+        removeButton.onclick = () => removeFromRanking(key, listItem);
+
+        listItem.appendChild(removeButton);
+        listItem.appendChild(document.createTextNode(text));
+
+        rankingList.appendChild(listItem);
+    }
+
+    function removeFromRanking(key, listItem) {
+        rankingList.removeChild(listItem);
+        delete selectedChoices[key];
+        showChoice(key);
+    }
+
+    function showChoice(activity) {
+        let buttons = document.querySelectorAll(".choice-btn");
+        buttons.forEach(button => {
+            if (button.innerText.includes(activity)) {
+                button.style.display = "block";
+            }
+        });
+    }
+
+    function hideChoice(activity) {
+        let buttons = document.querySelectorAll(".choice-btn");
+        buttons.forEach(button => {
+            if (button.innerText.includes(activity)) {
+                button.style.display = "none";
+            }
+        });
+    }
+
+    function nextStep() {
+        // Convert object keys to an array
+        let selectedArray = Object.keys(selectedChoices);
+
+        // Store final selection in localStorage
+        localStorage.setItem("finalSelection", JSON.stringify(selectedArray));
+
+        console.log("Stored selections in localStorage:", localStorage.getItem("finalSelection"));
+
+        // Redirect to final.html
+        window.location.href = "final.html";
+    }
+</script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Selections</title>
+    <style>
+        body {
+            background-color: #fceaea;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 50%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            color: #ff3366;
+            text-shadow: 2px 2px #ff99cc;
+        }
+        .final-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .final-list li {
+            background: #ff6699;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .btn {
+            background: #ff6699;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;;
+            box-shadow: 3px 3px #ff3366;
+        }
+        .btn:hover {
+            background: #ff3366;
+            box-shadow: 5px 5px #cc0033;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Your Final Selections</h2>
+    <ul class="final-list"></ul>
+    <button id="done-btn" class="btn">Done</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let finalList = document.querySelector(".final-list");
+        let selections = localStorage.getItem("finalSelection");
+
+        if (selections) {
+            selections = JSON.parse(selections);
+            if (Array.isArray(selections) && selections.length > 0) {
+                selections.forEach(activity => {
+                    let listItem = document.createElement("li");
+                    listItem.textContent = activity;
+                    finalList.appendChild(listItem);
+                });
+            } else {
+                finalList.innerHTML = "<li>No selections made</li>";
+            }
+        } else {
+            finalList.innerHTML = "<li>No selections found</li>";
+        }
+
+        document.getElementById("done-btn").addEventListener("click", () => {
+            fetch('http://localhost:3000/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ selections })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                window.location.href = "thanks.html"; // Redirect after email is sent
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">   
+    <title>Happy</title>
+    <style>
+        body {
+            background-color: #fceaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-image: url('./images/hearts.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .window {
+            background: #ffb6c1;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ffb6c1;
+        }
+        .im {
+            background: #f2dadf;
+            width: 356px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #Ffc1cc;
+        }
+        .header {
+            background: #f4c2c2;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            padding: 5px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            border: 2px solid #Ffc1cc;
+        }
+        p {
+            font-size: 20px;
+            color: #333;
+            text-shadow: 1px 1px #ff99cc;
+            font-family: "Lucida Handwriting";
+            text-transform: uppercase;
+        }
+        .btn {
+            background: #ff6699;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 3px 3px #ff3366;
+        }
+        .btn:hover {
+            background: #ff3366;
+            box-shadow: 5px 5px #cc0033;
+        }
+        h1 {
+            color: white;
+            text-shadow: 2px 2px #ff3366;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="header">
+            <h1>Yatta Yatta !!!</h1>
+        </div>
+        <div class="im">
+        <img src=".\images\yatta.gif" alt="Happy" width="300" height="250">
+        </div>
+        <br>
+        <p> Now, let's make plans teehee <i class="fa-regular fa-face-kiss-wink-heart"></i></p>
+        <br>
+        <button class="btn" onclick="nextStep()">Let's go</button>
+    </div>
+
+    <script>
+        function nextStep() {
+            window.location.href = 'plan.html';
+        }
+    </script>
+</body>
+</html>
