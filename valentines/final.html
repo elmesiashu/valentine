@@ -6,6 +6,38 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <title>Final Selections</title>
     <style>
+            /* For devices with a maximum width of 600px */
+            @media screen and (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+
+        /* For devices with a width between 601px and 900px */
+        @media screen and (min-width: 601px) and (max-width: 900px) {
+            body {
+                font-size: 16px;
+            }
+            .container {
+                width: 80%;
+                margin: auto;
+            }   
+        }
+
+        /* For devices with a width above 900px */
+        @media screen and (min-width: 901px) {
+            body {
+                font-size: 18px;
+            }
+            .container {
+                width: 70%;
+                margin: auto;
+            }
+        }
         body {
             background-color: #fceaea;
             text-align: center;
