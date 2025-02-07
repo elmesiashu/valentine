@@ -68,44 +68,47 @@
     document.addEventListener("DOMContentLoaded", () => {
         let finalList = document.querySelector(".final-list");
         let selections = localStorage.getItem("finalSelection");
+    
+        // Store globally so it's accessible in the click handler
+        window.selections = selections ? JSON.parse(selections) : [];
 
-        if (selections) {
-            selections = JSON.parse(selections);
-            if (Array.isArray(selections) && selections.length > 0) {
-                selections.forEach(activity => {
-                    let listItem = document.createElement("li");
-                    listItem.textContent = activity;
-                    finalList.appendChild(listItem);
-                });
-            } else {
-                finalList.innerHTML = "<li>No selections made</li>";
-            }
+        if (Array.isArray(window.selections) && window.selections.length > 0) {
+            window.selections.forEach(activity => {
+                let listItem = document.createElement("li");
+                listItem.textContent = activity;
+                finalList.appendChild(listItem);
+            });
         } else {
-            finalList.innerHTML = "<li>No selections found</li>";
+            finalList.innerHTML = "<li>No selections made</li>";
         }
-
     });
 
-    // Use EmailJS to send the selections via the template
+    // Ensure EmailJS is initialized correctly
+    document.addEventListener("DOMContentLoaded", () => {   
+        emailjs.init("fOf-_ZZ234bHzM5Gp");  // Replace with your actual EmailJS user ID
+    });
+
+    // Use EmailJS to send the selections
     document.getElementById("done-btn").addEventListener("click", () => {
+        if (!window.selections || window.selections.length === 0) {
+            alert("No selections to send!");
+            return;
+        }
+
         emailjs.send("service_3kzt4of", "template_ff1wc79", {
-            selections: selections.join("\n")  // Format the selections as a list
+            selections: window.selections.join("\n")  // Format selections as a list
         })
+
         .then(function(response) {
             console.log("Email sent successfully!", response);
             window.location.href = "thanks.html"; // Redirect after email is sent
-        }, function(error) {
+        })
+
+        .catch(function(error) {
             console.error("Failed to send email:", error);
+            alert("Error sending email. Check console for details.");
         });
     });
-    
-</script>
-
-<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script type="text/javascript">
-    (function() {
-        emailjs.init("fOf-_ZZ234bHzM5Gp");  // Replace with your actual user ID from EmailJS
-    })();
 </script>
 
 </body>
