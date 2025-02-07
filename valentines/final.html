@@ -67,24 +67,26 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        let finalList = document.querySelector(".final-list");
-        let storedSelections = localStorage.getItem("finalSelection");
+    let finalList = document.querySelector(".final-list"); // Find the list in HTML
+    let storedSelections = localStorage.getItem("finalSelection");
 
-        // Store selections globally so the button event can access it
-        window.selections = storedSelections ? JSON.parse(storedSelections) : [];
+    // Ensure selections are correctly parsed from localStorage
+    window.selections = storedSelections ? JSON.parse(storedSelections) : [];
 
-        if (Array.isArray(window.selections) && window.selections.length > 0) {
-            finalList.innerHTML = ""; // Clear list before adding items
-            window.selections.forEach(activity => {
-                let listItem = document.createElement("li");
-                listItem.textContent = activity;
-                finalList.appendChild(listItem);
+    // DEBUGGING: Print selections to console to verify they're retrieved
+    console.log("Final selections from localStorage:", window.selections);
+
+    // Clear previous content before inserting new items
+    finalList.innerHTML = "";
+
+    if (Array.isArray(window.selections) && window.selections.length > 0) {
+        window.selections.forEach(activity => {
+            let listItem = document.createElement("li"); // Create <li> element
+            listItem.textContent = activity; // Set text content
+            finalList.appendChild(listItem); // Add to the <ul>
         });
-
-            // ✅ Print selections to console for debugging
-            console.log("Final selections:", window.selections);
-        } else {
-            finalList.innerHTML = "<li>No selections made</li>";
+    } else {
+        finalList.innerHTML = "<li>No selections made</li>";
     }
 
         // Check if emailjs is loaded before initializing
