@@ -6,8 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <title>Final Selections</title>
     <style>
-            /* For devices with a maximum width of 600px */
-            @media screen and (max-width: 600px) {
+        /* For devices with a maximum width of 600px */
+        @media screen and (max-width: 600px) {
             body {
                 font-size: 14px;
             }
@@ -135,19 +135,20 @@
             }
 
             emailjs.send("service_3kzt4of", "template_ff1wc79", {
-            selections: window.selections.join("\n")
+                selections: selections.join("\n")
             })
             .then(function(response) {
-            console.log("Email sent successfully!", response);
-            window.location.href = "thanks.html";
+                console.log("Email sent successfully!", response);
+                window.location.href = "thanks.html";
             })
             .catch(function(error) {
-            console.error("Failed to send email:", error);
-            alert("Error sending email. Check console for details.");
+                console.error("Failed to send email:", error);
+                alert("Error sending email. Check console for details.");
             });
         });
     });
 </script>
+
 
 </body>
 </html>
