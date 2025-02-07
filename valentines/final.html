@@ -103,15 +103,15 @@
             }
 
             emailjs.send("service_3kzt4of", "template_ff1wc79", {
-                selections: selections.join("\n")  // Format selections as a list
+            selections: window.selections.join("\n")
             })
-            .then(response => {
-                console.log("Email sent successfully!", response);
-                window.location.href = "thanks.html"; // Redirect after email is sent
+            .then(function(response) {
+            console.log("Email sent successfully!", response);
+            window.location.href = "thanks.html";
             })
-            .catch(error => {
-                console.error("Failed to send email:", error);
-                alert("Error sending email. Check console for details.");
+            .catch(function(error) {
+            console.error("Failed to send email:", error);
+            alert("Error sending email. Check console for details.");
             });
         });
     });
