@@ -84,7 +84,7 @@
 
         // Initialize EmailJS
         if (typeof emailjs !== "undefined") {
-            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+            emailjs.init("fOf-_ZZ234bHzM5Gp"); // Replace with your EmailJS user ID
         } else {
             console.error("EmailJS library did not load. Check your script URL.");
         }
@@ -102,7 +102,7 @@
                 return;
             }
 
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+            emailjs.send("service_3kzt4of", "template_ff1wc79", {
                 selections: selections.join("\n")  // Format selections as a list
             })
             .then(response => {
