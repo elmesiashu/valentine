@@ -64,6 +64,17 @@
     <button id="done-btn" class="btn">Done</button>
 </div>
 
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.emailjs) {
+            emailjs.init("fOf-_ZZ234bHzM5Gp");  // Replace with your EmailJS user ID
+        } else {
+            console.error("EmailJS failed to load.");
+        }
+    });
+</script>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
     let finalList = document.querySelector(".final-list");
