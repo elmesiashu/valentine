@@ -67,59 +67,52 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-    let finalList = document.querySelector(".final-list"); // Find the list in HTML
-    let storedSelections = localStorage.getItem("finalSelection");
+        const finalList = document.querySelector(".final-list");
+        const storedSelections = localStorage.getItem("finalSelection");
+        const selections = storedSelections ? JSON.parse(storedSelections) : [];
 
-    // Ensure selections are correctly parsed from localStorage
-    window.selections = storedSelections ? JSON.parse(storedSelections) : [];
+        // Display selections in the list
+        if (selections.length > 0) {
+            selections.forEach(activity => {
+                const listItem = document.createElement("li");
+                listItem.textContent = activity;
+                finalList.appendChild(listItem);
+            });
+        } else {
+            finalList.innerHTML = "<li>No selections made</li>";
+        }
 
-    // DEBUGGING: Print selections to console to verify they're retrieved
-    console.log("Final selections from localStorage:", window.selections);
-
-    // Clear previous content before inserting new items
-    finalList.innerHTML = "";
-
-    if (Array.isArray(window.selections) && window.selections.length > 0) {
-        window.selections.forEach(activity => {
-            let listItem = document.createElement("li"); // Create <li> element
-            listItem.textContent = activity; // Set text content
-            finalList.appendChild(listItem); // Add to the <ul>
-        });
-    } else {
-        finalList.innerHTML = "<li>No selections made</li>";
-    }
-
-        // Check if emailjs is loaded before initializing
+        // Initialize EmailJS
         if (typeof emailjs !== "undefined") {
-            emailjs.init("fOf-_ZZ234bHzM5Gp"); // Replace with your EmailJS user ID
-            console.log("EmailJS initialized successfully.");
+            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
         } else {
             console.error("EmailJS library did not load. Check your script URL.");
         }
-    });
 
-    document.getElementById("done-btn").addEventListener("click", () => {
-        if (!window.selections || window.selections.length === 0) {
-            alert("No selections to send!");
-            return;
-        }
+        // Send email on button click
+        document.getElementById("done-btn").addEventListener("click", () => {
+            if (selections.length === 0) {
+                alert("No selections to send!");
+                return;
+            }
 
-        if (typeof emailjs === "undefined") {
-            console.error("EmailJS is not defined. The script may not have loaded.");
-            alert("Error: EmailJS library not found. Please check your internet connection.");
-            return;
-        }
+            if (typeof emailjs === "undefined") {
+                console.error("EmailJS is not defined. The script may not have loaded.");
+                alert("Error: EmailJS library not found. Please check your internet connection.");
+                return;
+            }
 
-        emailjs.send("service_3kzt4of", "template_ff1wc79", {
-            selections: window.selections.join("\n")  // Format selections as a list
-        })
-        .then(function(response) {
-            console.log("Email sent successfully!", response);
-            window.location.href = "thanks.html"; // Redirect after email is sent
-        })
-        .catch(function(error) {
-            console.error("Failed to send email:", error);
-            alert("Error sending email. Check console for details.");
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                selections: selections.join("\n")  // Format selections as a list
+            })
+            .then(response => {
+                console.log("Email sent successfully!", response);
+                window.location.href = "thanks.html"; // Redirect after email is sent
+            })
+            .catch(error => {
+                console.error("Failed to send email:", error);
+                alert("Error sending email. Check console for details.");
+            });
         });
     });
 </script>
