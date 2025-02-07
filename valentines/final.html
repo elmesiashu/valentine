@@ -84,24 +84,27 @@
             finalList.innerHTML = "<li>No selections found</li>";
         }
 
-        // Use EmailJS instead of your server to send the email
-        document.getElementById("done-btn").addEventListener("click", () => {
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", { selections: selections.join(", ") })
-                .then(function(response) {
-                    console.log("Email sent successfully!", response);
-                    window.location.href = "thanks.html"; // Redirect after email is sent
-                }, function(error) {
-                    console.error("Failed to send email:", error);
-                });
+    });
+
+    // Use EmailJS to send the selections via the template
+    document.getElementById("done-btn").addEventListener("click", () => {
+        emailjs.send("service_3kzt4of", "template_ff1wc79", {
+            selections: selections.join("\n")  // Format the selections as a list
+        })
+        .then(function(response) {
+            console.log("Email sent successfully!", response);
+            window.location.href = "thanks.html"; // Redirect after email is sent
+        }, function(error) {
+            console.error("Failed to send email:", error);
         });
     });
+    
 </script>
 
-<!-- Include the EmailJS SDK -->
 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script type="text/javascript">
     (function() {
-        emailjs.init("YOUR_USER_ID");  // Replace with your actual user ID from EmailJS
+        emailjs.init("fOf-_ZZ234bHzM5Gp");  // Replace with your actual user ID from EmailJS
     })();
 </script>
 
